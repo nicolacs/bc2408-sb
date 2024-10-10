@@ -1,0 +1,9 @@
+server:
+  port: 8082
+
+api:
+  mtr:
+    domain: "https://rt.data.gov.hk"
+    
+
+// "https://rt.data.gov.hk/v1/transport/mtr/getSchedule.php?line=TML&sta=DIH

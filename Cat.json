@@ -1,0 +1,15 @@
+{
+    "name": "John",
+    "age": 13,
+    "eyes": [
+      {
+        "color": "RED"
+      },
+      {
+        "color": "RED"
+      }
+    ],
+    "tail": {
+      "length": 13.0
+    }
+  }

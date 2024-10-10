@@ -1,0 +1,11 @@
+- 開mvn project
+- 改application -> .yml
+  - server:
+  -   port:80xx
+-   開folder 
+    -   Create : controller + impl , service + impl , model
+-   睇題目, 出JSON 一堆String -> 開個CalculateResponse class for response OBJ
+    -   寫曬attribute , @...
+-   睇題目, 2條Get, 1條Post
+    -   In controller, 開CalOperation 寫曬3個Mapping(2GET, 1POST)
+-   
