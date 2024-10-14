@@ -1,0 +1,20 @@
+server:
+  port: 8086
+
+api:
+  jph:
+    domain: "jsonplaceholder.typicode.com"
+    endpoints:
+      users: "/users"
+      posts: "/posts"
+      comments: "/comments"
+
+spring:
+  datasource:
+    driverClassName: "com.mysql.jdbc.Driver"
+    url: "jdbc:mysql://127.0.0.1:3306/db_bc2408_ex2"
+    username: root
+    password: 
+  jpa:
+    show-sql: true
+    hibernate.ddl-auto: create
