@@ -13,6 +13,7 @@ import com.bootcamp.demo_jsonplaceholder.entity.UserEntity;
     // 負責gen死物 
   // 3. JPA is java layer for developer to interact with Database/SQL/Tables
 @Repository // One of the component for Component Scan
+            // Extend左入面成套方法
 public interface UserRepository extends JpaRepository<UserEntity, Long> {
   // 1. save(): UserEntity & saveAll()
   // 2. findAll

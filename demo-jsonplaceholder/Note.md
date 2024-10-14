@@ -17,3 +17,12 @@
 -恆生PROJECT 3WEEKS, GOV PROJECT 2MONTH, 如放同一個CLASS 又run唔到, 又test唔到
 -分layer 就可以減testcase
     -eg: 10個if 既method, 一個method寫曬(testcase=2*2*2*2^10), 同分10個method(testcase = 2*10only)
+
+# Step
+- Controller call Service call Respository
+
+## GlobalExceptionalHandler
+- 全局捕捉 ->統一攔截
+  
+## mvn
+-> Note
