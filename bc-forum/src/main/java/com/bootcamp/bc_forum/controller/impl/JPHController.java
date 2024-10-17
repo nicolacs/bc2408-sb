@@ -4,10 +4,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 import com.bootcamp.bc_forum.controller.JPHOperation;
-import com.bootcamp.bc_forum.dto.CommentsDTO;
-import com.bootcamp.bc_forum.dto.PostsDTO;
-import com.bootcamp.bc_forum.dto.UserDTO;
-import com.bootcamp.bc_forum.dto.UserPostCommentDTO;
+import com.bootcamp.bc_forum.model.dto.CommentsDTO;
+import com.bootcamp.bc_forum.model.dto.PostsDTO;
+import com.bootcamp.bc_forum.model.dto.UserCommentsDTO;
+import com.bootcamp.bc_forum.model.dto.UserDTO;
+import com.bootcamp.bc_forum.model.dto.UserPostCommentDTO;
 import com.bootcamp.bc_forum.service.AllService;
 import com.bootcamp.bc_forum.service.CommentService;
 import com.bootcamp.bc_forum.service.PostService;
@@ -48,4 +49,13 @@ public class JPHController implements JPHOperation{
         return allService.getAll();
     }
 
+    @Override
+    public UserCommentsDTO getUserComment(Integer id){
+        return allService.getUserComment(id);
+    }
+
+    @Override
+    public UserDTO getUserById(Integer id){
+        return userService.getUserById(id);
+    }
 }

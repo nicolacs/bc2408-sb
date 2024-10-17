@@ -1,42 +1,45 @@
-package com.bootcamp.bc_forum.dto;
+package com.bootcamp.bc_forum.model.dto;
 
-import com.bootcamp.bc_forum.dto.UserDTO.Address.Geo;
 import java.util.ArrayList;
 import java.util.List;
-import com.bootcamp.bc_forum.dto.UserDTO.Company;
+import com.bootcamp.bc_forum.model.dto.UserDTO.Company;
+import com.bootcamp.bc_forum.model.dto.UserDTO.Address.Geo;
+import com.bootcamp.bc_forum.model.dto.UserPostCommentDTO.AddressDTO.CompanyDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
 @Builder
+@Setter
 @AllArgsConstructor
 public class UserPostCommentDTO {
-    private int id;
+    private Long id;
     private String name;
     private String username;
     private String email;
-    private Address address; // One-to-one
+    private AddressDTO address; // One-to-one
     private String phone;
     private String website;
-    private Company company;
-    private List<Posts> posts = new ArrayList<>();
-    //private List<Comments> comments = new ArrayList<>();  -> 係下面出
-
+    private CompanyDTO company;
+    @Builder.Default
+    private List<Posts> postDTO = new ArrayList<>();
+    
     @Getter
     @Builder
     @AllArgsConstructor
-    public static class Address{
+    public static class AddressDTO{
         private String street;
         private String suite;
         private String city;
         private String zipcode;
-        private Geo geo;
+        private GeoDTO geo;
 
         @Getter
         @Builder
         @AllArgsConstructor
-        public static class Geo {
+        public static class GeoDTO {
         private String lat;
         private String lng;
         }
@@ -44,7 +47,7 @@ public class UserPostCommentDTO {
     @Getter
     @Builder
     @AllArgsConstructor
-    public static class Company{
+    public static class CompanyDTO{
         private String name;
         private String catchPhrase;
         private String bs;
@@ -53,18 +56,24 @@ public class UserPostCommentDTO {
 
     @Getter
     @Builder
+    @Setter
     @AllArgsConstructor
     public static class Posts{
-        private int id;
+        private Long postId;
         private String title;
         private String body;
-        List<Comments> comments = new ArrayList<>();
+        @Builder.Default
+        private List<Comments> commentsDTO = new ArrayList<>();
+    }
 
-        public static class Comments{
-            private int id;
-            private String name;
-            private String email;
-            private String body;
-        }
+    @Getter
+    @Builder
+    @Setter
+    @AllArgsConstructor
+    public static class Comments{
+        private Long commentId;
+        private String name;
+        private String email;
+        private String body;
     }
 }

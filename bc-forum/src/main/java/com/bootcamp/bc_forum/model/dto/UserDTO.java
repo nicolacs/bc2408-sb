@@ -1,4 +1,4 @@
-package com.bootcamp.bc_forum.dto;
+package com.bootcamp.bc_forum.model.dto;
 
 import org.springframework.stereotype.Indexed;
 import lombok.AllArgsConstructor;
@@ -12,7 +12,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserDTO {
-    private int id;
+    private Long id;
+    private String name;
     private String username;
     private String email;
     private Address address; // One-to-one

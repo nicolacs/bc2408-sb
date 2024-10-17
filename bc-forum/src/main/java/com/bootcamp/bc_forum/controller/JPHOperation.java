@@ -2,10 +2,12 @@ package com.bootcamp.bc_forum.controller;
 
 import java.util.List;
 import org.springframework.web.bind.annotation.GetMapping;
-import com.bootcamp.bc_forum.dto.CommentsDTO;
-import com.bootcamp.bc_forum.dto.PostsDTO;
-import com.bootcamp.bc_forum.dto.UserDTO;
-import com.bootcamp.bc_forum.dto.UserPostCommentDTO;
+import org.springframework.web.bind.annotation.RequestParam;
+import com.bootcamp.bc_forum.model.dto.CommentsDTO;
+import com.bootcamp.bc_forum.model.dto.PostsDTO;
+import com.bootcamp.bc_forum.model.dto.UserCommentsDTO;
+import com.bootcamp.bc_forum.model.dto.UserDTO;
+import com.bootcamp.bc_forum.model.dto.UserPostCommentDTO;
 
 public interface JPHOperation {
     @GetMapping("/jph/users")
@@ -19,5 +21,12 @@ public interface JPHOperation {
 
     @GetMapping("/jph/all")
     List<UserPostCommentDTO> getAll();
+
+    @GetMapping("jph/usercomment")
+    UserCommentsDTO getUserComment(@RequestParam Integer userId);
+
+    @GetMapping("jph/user")
+    UserDTO getUserById(@RequestParam Integer userId);
+
     
 }
