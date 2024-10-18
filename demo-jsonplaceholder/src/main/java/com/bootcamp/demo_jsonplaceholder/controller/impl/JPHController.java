@@ -1,13 +1,14 @@
 package com.bootcamp.demo_jsonplaceholder.controller.impl;
 
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.bootcamp.demo_jsonplaceholder.controller.JPHOperation;
 import com.bootcamp.demo_jsonplaceholder.entity.UserEntity;
-import com.bootcamp.demo_jsonplaceholder.model.UserDTO;
+import com.bootcamp.demo_jsonplaceholder.model.dto.UserDTO;
 import com.bootcamp.demo_jsonplaceholder.service.JPHService;
 import com.bootcamp.demo_jsonplaceholder.service.impl.JPHServiceImpl;
 
@@ -61,6 +62,16 @@ public class JPHController implements JPHOperation {
   @Override
   public UserEntity createUser(UserEntity userEntity){
     return this.jphService.createUser(userEntity);
+  }
+
+  @Override
+  public UserEntity patchUserWebsite(Long id, String website) {
+    return this.jphService.patchUserWebsite(id, website);
+  }
+
+  @Override
+  public UserEntity getUserByWebsite(String website){
+    return this.jphService.findByWebsite(website).orElse(null);
   }
 }
 

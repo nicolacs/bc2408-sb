@@ -87,7 +87,7 @@ public class AllServiceImpl implements AllService {
 };
 
   @Override
-  public UserCommentsDTO getUserComment(Integer id) {
+  public UserCommentsDTO getUserComment(Long id) {
     UserPostCommentDTO target = this.getAll().stream()//
     .filter(user->id.equals(user.getId()))//
     .findFirst()//

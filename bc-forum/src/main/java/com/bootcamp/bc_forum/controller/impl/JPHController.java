@@ -50,12 +50,12 @@ public class JPHController implements JPHOperation{
     }
 
     @Override
-    public UserCommentsDTO getUserComment(Integer id){
+    public UserCommentsDTO getUserComment(Long id){
         return allService.getUserComment(id);
     }
 
     @Override
-    public UserDTO getUserById(Integer id){
+    public UserDTO getUserById(Long id){
         return userService.getUserById(id);
     }
 }

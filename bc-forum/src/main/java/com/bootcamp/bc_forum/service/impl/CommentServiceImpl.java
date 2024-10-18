@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
+import com.bootcamp.bc_forum.exception.ErrorCode;
+import com.bootcamp.bc_forum.exception.ResTemplateErrorException;
 import com.bootcamp.bc_forum.model.dto.CommentsDTO;
 import com.bootcamp.bc_forum.service.CommentService;
 import com.bootcamp.bc_forum.util.Scheme;
@@ -38,8 +40,8 @@ public class CommentServiceImpl implements CommentService {
     CommentsDTO[] comments;
     try{
         comments = this.restTemplate.getForObject(url, CommentsDTO[].class);
-      } catch (RestClientException e){
-      throw new RestClientException("Json  Placeholder Exception.");
+      } catch (ResTemplateErrorException e){
+      throw new ResTemplateErrorException(ErrorCode.RESTEMPLATE_ERROR_JSONPLACEHOLDER.getMsg());
       }
     return List.of(comments);  
   }  

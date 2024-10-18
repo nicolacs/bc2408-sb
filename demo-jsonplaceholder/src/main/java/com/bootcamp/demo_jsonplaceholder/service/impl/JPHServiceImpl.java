@@ -9,10 +9,14 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
+import com.bootcamp.demo_jsonplaceholder.entity.PostEntity;
 import com.bootcamp.demo_jsonplaceholder.entity.UserEntity;
+import com.bootcamp.demo_jsonplaceholder.entity.UserEntity2;
 import com.bootcamp.demo_jsonplaceholder.exception.JPHRestClientException;
 import com.bootcamp.demo_jsonplaceholder.mapper.JPHMapper;
-import com.bootcamp.demo_jsonplaceholder.model.UserDTO;
+import com.bootcamp.demo_jsonplaceholder.model.dto.CommentDTO;
+import com.bootcamp.demo_jsonplaceholder.model.dto.PostDTO;
+import com.bootcamp.demo_jsonplaceholder.model.dto.UserDTO;
 import com.bootcamp.demo_jsonplaceholder.repository.UserRepository;
 import com.bootcamp.demo_jsonplaceholder.service.JPHService;
 import com.bootcamp.demo_jsonplaceholder.util.Scheme;
@@ -43,6 +47,12 @@ public class JPHServiceImpl implements JPHService {
 
   @Value("${api.jph.endpoints.users}")
   private String usersEndpoint;
+
+  @Value("${api.jph.endpoints.posts}")
+  private String postsEndpoint;
+
+  @Value("${api.jph.endpoints.comments}")
+  private String commentsEndpoint;
 
     @Override
     public List<UserDTO> getUsers() {
@@ -137,6 +147,50 @@ public class JPHServiceImpl implements JPHService {
   @Override
   public UserEntity createUser(UserEntity userEntity){
     return this.userRepository.save(userEntity);
+  }
 
+  @Override
+  public Optional<UserEntity> findByWebsite(String website){
+    return this.userRepository.findByWebsite(website);
+  }
+
+  //!!!! -----------------2024-10-17-----------------------
+  @Override
+  public List<PostDTO> getPosts() {
+    String url = Url.builder() //
+        .scheme(Scheme.HTTPS) //
+        .domain(this.jphDomain) //
+        .endpoint(this.postsEndpoint) //
+        .build() //
+        .toUriString();
+    PostDTO[] posts;
+    try {
+      posts = this.restTemplate.getForObject(url, PostDTO[].class);
+    } catch (RestClientException e) {
+      throw new JPHRestClientException("Json Placeholder Exception.");
+    }
+    return List.of(posts);
+  }
+
+  @Override
+  public List<CommentDTO> getComments() {
+    String url = Url.builder() //
+        .scheme(Scheme.HTTPS) //
+        .domain(this.jphDomain) //
+        .endpoint(this.commentsEndpoint) //
+        .build() //
+        .toUriString();
+    CommentDTO[] comments;
+    try {
+      comments = this.restTemplate.getForObject(url, CommentDTO[].class);
+    } catch (RestClientException e) {
+      throw new JPHRestClientException("Json Placeholder Exception.");
+    }
+    return List.of(comments);
+  }
+
+  @Override
+  public List<UserEntity2> saveAll(List<UserEntity2> userEntities) {
+    return userRepository.saveAll(userEntities);
   }
 }

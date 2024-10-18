@@ -34,8 +34,10 @@ public class JPHMapper {
   }
 
   public PostEntity map(PostsDTO posts) {
-    return PostEntity.builder().postId(posts.getId()).title(posts.getTitle())
-        .body(posts.getBody()).build();
+    return PostEntity.builder().postId(posts.getId())
+      .userId(posts.getUserId())
+      .title(posts.getTitle())
+      .body(posts.getBody()).build();
   }
 
   public CommentEntity map(CommentsDTO comments) {

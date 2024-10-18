@@ -23,10 +23,10 @@ public interface JPHOperation {
     List<UserPostCommentDTO> getAll();
 
     @GetMapping("jph/usercomment")
-    UserCommentsDTO getUserComment(@RequestParam Integer userId);
+    UserCommentsDTO getUserComment(@RequestParam Long userId);
 
     @GetMapping("jph/user")
-    UserDTO getUserById(@RequestParam Integer userId);
+    UserDTO getUserById(@RequestParam Long userId);
 
     
 }

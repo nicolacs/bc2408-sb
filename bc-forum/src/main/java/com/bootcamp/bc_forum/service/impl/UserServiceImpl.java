@@ -8,17 +8,20 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
+import com.bootcamp.bc_forum.entity.AddressEntity;
 import com.bootcamp.bc_forum.entity.UserEntity;
 import com.bootcamp.bc_forum.exception.ErrorCode;
 import com.bootcamp.bc_forum.exception.JPHRestClientException;
+import com.bootcamp.bc_forum.exception.ResTemplateErrorException;
 import com.bootcamp.bc_forum.exception.UserNotFoundException;
 import com.bootcamp.bc_forum.model.dto.CommentsDTO;
 import com.bootcamp.bc_forum.model.dto.PostsDTO;
 import com.bootcamp.bc_forum.model.dto.UserDTO;
+import com.bootcamp.bc_forum.repository.AddressRepository;
+import com.bootcamp.bc_forum.repository.UserRepository;
 import com.bootcamp.bc_forum.service.UserService;
 import com.bootcamp.bc_forum.util.Scheme;
 import com.bootcamp.bc_forum.util.Url;
-import repository.UserRepository;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -29,6 +32,9 @@ public class UserServiceImpl implements UserService {
 
   @Autowired
   private UserRepository userRepository;
+
+  @Autowired
+  private AddressRepository addressRepository;
 
   @Value("${api.jph.domain}")
   private String jphDomain;
@@ -55,15 +61,15 @@ public class UserServiceImpl implements UserService {
     UserDTO[] users;
     try {
       users = this.restTemplate.getForObject(url, UserDTO[].class);
-    } catch (RestClientException e) {
-      throw new RestClientException("Json  Placeholder Exception.");
+    } catch (ResTemplateErrorException e) {
+      throw new ResTemplateErrorException(ErrorCode.RESTEMPLATE_ERROR_JSONPLACEHOLDER.getMsg());
     }
     return List.of(users);
 
   }
 
   @Override
-  public UserDTO getUserById(Integer id) {
+  public UserDTO getUserById(Long id) {
     String url = Url.builder()
       .scheme(Scheme.HTTPS).domain(this.jphDomain)
       .endpoint(this.usersEndpoint).build() //
@@ -84,5 +90,10 @@ public class UserServiceImpl implements UserService {
   @Override
   public List<UserEntity> saveAll(List<UserEntity> userEntities){
     return userRepository.saveAll(userEntities);
+  }
+
+  @Override
+  public List<AddressEntity> saveAddress(List<AddressEntity> addressEntities){
+    return addressRepository.saveAll(addressEntities);
   }
 }

@@ -27,8 +27,8 @@ import lombok.Setter;
 public class PostEntity implements Serializable {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long userId;
   private Long postId;
+  private Long userId;
   private String title;
   private String body;
 

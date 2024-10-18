@@ -21,7 +21,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Builder
 @Getter
-@Setter
+@Setter 
 public class CommentEntity implements Serializable {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
