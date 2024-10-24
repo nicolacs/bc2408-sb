@@ -3,6 +3,7 @@ package com.bootcamp.bc_forum.entity;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -32,7 +33,8 @@ public class PostEntity implements Serializable {
   private String title;
   private String body;
 
-  @Builder.Default
+  // PK setting method
+  @JsonIgnore
   @OneToMany(mappedBy = "post", cascade = CascadeType.ALL,
       fetch = FetchType.LAZY)
   private List<CommentEntity> comments = new ArrayList<>();

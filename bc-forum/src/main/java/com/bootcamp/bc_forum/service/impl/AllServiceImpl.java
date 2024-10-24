@@ -2,10 +2,11 @@ package com.bootcamp.bc_forum.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import com.bootcamp.bc_forum.exception.ErrorCode;
+import com.bootcamp.bc_forum.exception.UserNotFoundException;
 import com.bootcamp.bc_forum.mapper.JPHMapper;
 import com.bootcamp.bc_forum.model.dto.CommentsDTO;
 import com.bootcamp.bc_forum.model.dto.PostsDTO;
@@ -16,8 +17,7 @@ import com.bootcamp.bc_forum.service.AllService;
 import com.bootcamp.bc_forum.service.CommentService;
 import com.bootcamp.bc_forum.service.PostService;
 import com.bootcamp.bc_forum.service.UserService;
-import com.bootcamp.bc_forum.util.Scheme;
-import com.bootcamp.bc_forum.util.Url;
+
 
 @Service
 public class AllServiceImpl implements AllService {
@@ -91,8 +91,10 @@ public class AllServiceImpl implements AllService {
     UserPostCommentDTO target = this.getAll().stream()//
     .filter(user->id.equals(user.getId()))//
     .findFirst()//
-    .get();
-
+    .orElseThrow(() -> 
+      new UserNotFoundException(ErrorCode.USER_NOT_FOUND.getMsg()));
+    //.get();
+    
     UserCommentsDTO result = mapper.mapToDTO(target);
     return result;
 }

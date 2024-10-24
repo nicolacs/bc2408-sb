@@ -7,4 +7,7 @@ import com.bootcamp.bc_forum.model.dto.PostsDTO;
 public interface PostService {
     List<PostsDTO> getPost();
     List<PostEntity> saveAll(List<PostEntity> postEntities);
+
+    //!!! Learning JPQL
+    PostEntity findPostEntity(String title);
 }

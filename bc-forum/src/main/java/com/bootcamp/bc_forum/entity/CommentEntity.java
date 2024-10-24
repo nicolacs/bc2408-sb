@@ -31,6 +31,7 @@ public class CommentEntity implements Serializable {
   @Column(length = 1000) // default 255
   private String body;
 
+  //FK setting method
   @ManyToOne
   @JoinColumn(name = "post_id", nullable = false)
   private PostEntity post; // getId() -> table     

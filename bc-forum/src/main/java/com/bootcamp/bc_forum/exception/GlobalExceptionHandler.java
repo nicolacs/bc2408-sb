@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.client.RestClientException;
+import com.bootcamp.bc_forum.util.ApiResp;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -28,7 +29,7 @@ public class GlobalExceptionHandler {
                 .build();
     }
 
-    @ExceptionHandler({InvalidInputException.class})
+    @ExceptionHandler({NumberFormatException.class})
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     public ErrorResponse InvalidInputExceptionHandler() {
         return ErrorResponse.builder()
@@ -45,6 +46,12 @@ public class GlobalExceptionHandler {
                 .message(ErrorCode.RESTEMPLATE_ERROR_JSONPLACEHOLDER.getMsg())
                 .build();
     }
+
+    // @ExceptionHandler({SQLException.class})
+    // @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    // public ApiResp DataConnectErrorHandler(){
+    //     return ApiResp.;
+    // }
 
 }
 

@@ -56,4 +56,10 @@ public class PostServiceImpl implements PostService {
   public List<PostEntity> saveAll(List<PostEntity> postEntities) {
     return postRepository.saveAll(postEntities);
   }
+
+  //!!! Learning JPQL
+  @Override
+  public PostEntity findPostEntity(String title){
+    return postRepository.findPostEntity(title);
+  }
 }

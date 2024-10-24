@@ -18,6 +18,7 @@ import com.bootcamp.bc_forum.model.dto.CommentsDTO;
 import com.bootcamp.bc_forum.model.dto.PostsDTO;
 import com.bootcamp.bc_forum.model.dto.UserCommentsDTO;
 import com.bootcamp.bc_forum.model.dto.UserDTO;
+import com.bootcamp.bc_forum.model.dto.UserDbDTO;
 import com.bootcamp.bc_forum.model.dto.UserPostCommentDTO;
 import com.bootcamp.bc_forum.model.dto.UserPostCommentDTO.AddressDTO;
 import com.bootcamp.bc_forum.model.dto.UserPostCommentDTO.AddressDTO.CompanyDTO;
@@ -31,6 +32,13 @@ public class JPHMapper {
         .username(user.getUsername()).email(user.getEmail())
         .phone(user.getPhone()).website(user.getWebsite())
         .dummy(String.valueOf("")).build();
+  }
+
+  public UserDbDTO mapUserDbDTO(UserEntity user){
+    return UserDbDTO.builder().id(user.getId()).name(user.getName())
+    .username(user.getUsername()).email(user.getEmail())
+    .phone(user.getPhone()).website(user.getWebsite())
+    .dummy(String.valueOf("")).build();
   }
 
   public PostEntity map(PostsDTO posts) {
