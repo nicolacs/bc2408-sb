@@ -1,0 +1,88 @@
+{
+    "quoteResponse": {
+        "result": [
+            {
+                "language": "en-US",
+                "region": "US",
+                "quoteType": "EQUITY",
+                "typeDisp": "Equity",
+                "qusetoteSourceName": "Delayed Quote","trig
+gerable":false,"customPriceAlertConfidence":"LOW","currency":"HKD","exchange":"H
+KG","shortName":"HKEX","longName":"HKEX","messageBoardId":"finmb_2446002","marke
+t":"hk_market","marketState":"REGULAR","exchangeTimezoneName":"Asia/Hong_Kong","
+exchangeTimezoneShortName":"HKT","gmtOffSetMilliseconds":28800000,"esgPopulated": false,
+                "regularMarketChangePercent": -0.12763047,
+                "regularMarketPrice": 313.0,"hasP
+rePostMarketData":false,"firstTradeDateMilliseconds":962069400000,"priceHint":3,"regularMarketChange": -0.3999939,
+                "regularMarketTime": 1730180627,"regularMarketDa
+yHigh":317.8,"regularMarketDayRange":"311.4 - 317.8","regularMarketDayLow":311.4,
+                "regularMarketVolume": 3234555,
+                "regularMarketPreviousClose": 313.4,
+                "bid": 312.8,"a
+sk":313.2,"bidSize":0,"askSize":0,"fullExchangeName":"HKSE","financialCurrency":"HKD",
+                "regularMarketOpen": 315.2,
+                "averageDailyVolume3Month": 11325096,"averageDail
+yVolume10Day":9877376,"fiftyTwoWeekLowChange":100.8,"fiftyTwoWeekLowChangePercen
+t":0.4750236,"fiftyTwoWeekRange":"212.2 - 397.8","fiftyTwoWeekHighChange":-84.79999,
+                "fiftyTwoWeekHighChangePercent": -0.21317242,
+                "fiftyTwoWeekLow": 212.2,"fiftyTw
+oWeekHigh":397.8,"fiftyTwoWeekChangePercent":13.96364,"earningsTimestamp":1729681140,
+                "earningsTimestampStart": 1729681140,
+                "earningsTimestampEnd": 1729681140,"earn
+ingsCallTimestampStart":1724232600,"earningsCallTimestampEnd":1724232600,"isEarn
+ingsDateEstimate":false,"trailingAnnualDividendRate":12.77,"trailingPE":33.404484,
+                "dividendRate": 8.72,
+                "trailingAnnualDividendYield": 0.04074665,
+                "dividendYield": 2
+.78,
+                "epsTrailingTwelveMonths": 9.37,
+                "epsForward": 10.33,
+                "epsCurrentYear": 9.82,"pri
+ceEpsCurrentYear":31.873728,"sharesOutstanding":1264509952,"bookValue":40.051,"f
+iftyDayAverage":272.076,"fiftyDayAverageChange":40.92401,"fiftyDayAverageChangeP
+ercent":0.1504139,"twoHundredDayAverage":252.938,"twoHundredDayAverageChange":60
+.061996,
+                "twoHundredDayAverageChangePercent": 0.23745738,
+                "marketCap": 395791630336,
+                "forwardPE": 30.300097,
+                "priceToBook": 7.8150363,
+                "sourceInterval": 15,"exchangeDataD
+elayedBy":15,"averageAnalystRating":"2.0 - Buy","tradeable":false,"cryptoTradeab
+le":false,"symbol":"0388.HK"},{"language":"en-US","region":"US","quoteType":"EQU
+ITY","typeDisp":"Equity","quoteSourceName":"Delayed Quote","triggerable":false,"
+customPriceAlertConfidence":"LOW","currency":"HKD","exchange":"HKG","shortName":"TENCENT",
+                "longName": "TENCENT",
+                "messageBoardId": "finmb_11042136",
+                "market":"hk_ma
+rket","marketState":"REGULAR","exchangeTimezoneName":"Asia/Hong_Kong","exchangeT
+imezoneShortName":"HKT","gmtOffSetMilliseconds":28800000,"esgPopulated":false,"r
+egularMarketChangePercent":0.04793425,"regularMarketPrice":417.4,"hasPrePostMark
+etData":false,"firstTradeDateMilliseconds":1087349400000,"priceHint":3,"regularM
+arketChange":0.19998169,"regularMarketTime":1730180628,"regularMarketDayHigh":423.4,
+                "regularMarketDayRange": "415.2 - 423.4",
+                "regularMarketDayLow": 415.2,"regular
+MarketVolume":9211220,"regularMarketPreviousClose":417.2,"bid":417.2,"ask":417.4,
+                "bidSize": 0,
+                "askSize": 0,
+                "fullExchangeName": "HKSE",
+                "financialCurrency": "CNY","re
+gularMarketOpen":419.4,"averageDailyVolume3Month":21737841,"averageDailyVolume10
+Day":17913474,"fiftyTwoWeekLowChange":157.19998,"fiftyTwoWeekLowChangePercent":0
+.60415053,
+                "fiftyTwoWeekRange": "260.2 - 482.4",
+                "fiftyTwoWeekHighChange": -65.0,"fi
+ftyTwoWeekHighChangePercent":-0.13474296,"fiftyTwoWeekLow":260.2,"fiftyTwoWeekHi
+gh":482.4,"fiftyTwoWeekChangePercent":44.260025,"earningsTimestamp":1731495540,"
+earningsTimestampStart":1731495540,"earningsTimestampEnd":1731495540,"earningsCa
+llTimestampStart":1731499200,"earningsCallTimestampEnd":1731499200,"isEarningsDa
+teEstimate":false,"trailingAnnualDividendRate":3.086,"trailingPE":23.988506,"div
+idendRate":3.4,"trailingAnnualDividendYield":0.0073969318,"dividendYield":0.81,"
+epsTrailingTwelveMonths":17.4,"epsForward":25.39,"epsCurrentYear":22.46,"priceEp
+sCurrentYear":18.58415,"sharesOutstanding":9184499712,"bookValue":92.935,"fiftyD
+ayAverage":402.584,"fiftyDayAverageChange":14.815979,"fiftyDayAverageChangePerce
+nt":0.036802202,"twoHundredDayAverage":349.112,"twoHundredDayAverageChange":68.287994,
+                "twoHundredDayAverageChangePercent": 0.19560483,
+                "marketCap": 3833610108928,"
+forwardPE":16.439543,"priceToBook":4.491311,"sourceInterval":15,"exchangeDataDel
+ayedBy":15,"averageAnalystRating":"1.7 - Buy","tradeable":false,"cryptoTradeable
+":false,"symbol":"0700.HK"}],"error":null}}

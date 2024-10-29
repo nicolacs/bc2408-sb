@@ -1,0 +1,21 @@
+server:
+  port: 8089
+
+spring:
+  datasource:
+    driverClassName: "com.mysql.jdbc.Driver"
+    url: "jdbc:mysql://127.0.0.1:3306/db_bc2408_finalproject"
+    username: root
+    password: 
+  jpa:
+    show-sql: true
+    hibernate.ddl-auto: create
+
+api:
+  yahoofinance:
+    domain: "query1.finance.yahoo.com"
+    path: "/v7/finance"
+    path2:  "/v1/test"
+    endpoints: 
+        quote: "/quote"
+        getcrumb: "/getcrumb"
