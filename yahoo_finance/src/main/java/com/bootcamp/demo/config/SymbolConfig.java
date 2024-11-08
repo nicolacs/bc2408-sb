@@ -31,8 +31,8 @@ public class SymbolConfig implements CommandLineRunner {
   @Override
   public void run(String... args) {
     // ! Clear all Stock Symbols in DB. (jpa.hibernate.ddl-auto: update)
-    // For rerun process.
-    this.stockPriceRepository.deleteAll();
+    // For retrun process.
+    //this.stockPriceRepository.deleteAll();
     this.stockRepository.deleteAll();
 
     String[] symbols = new String[] {"0388.HK", "0700.HK", "0005.HK"};
@@ -41,5 +41,7 @@ public class SymbolConfig implements CommandLineRunner {
         .collect(Collectors.toList());
     stockService.saveAll(entities);
     System.out.println("Insert Stock Symbols Completed.");
+
+    System.out.println("6A getDate*********" + stockService.getMaxDay("0700.HK"));
   }
 }

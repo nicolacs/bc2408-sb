@@ -4,9 +4,9 @@ server:
 spring:
   datasource:
     driverClassName: "com.mysql.jdbc.Driver"
-    url: "jdbc:mysql://127.0.0.1:3306/bootcamp_2408"
-    username: "root"
-    password: "admin1234"
+    url: "jdbc:mysql://127.0.0.1:3306/db_bc2408_yahoofinance"
+    username: root
+    password: 
   jpa:
     show-sql: true
     hibernate.ddl-auto: update
