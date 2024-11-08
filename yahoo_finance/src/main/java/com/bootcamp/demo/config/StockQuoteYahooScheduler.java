@@ -33,11 +33,11 @@ public class StockQuoteYahooScheduler {
   @Autowired
   private RedisTemplate<String, String> redisTemplate;
 
-  // @Scheduled(fixedRate = 300_000)
-    @Scheduled(cron = "0 34,39,44,49,54,59 9 * * MON-FRI",
-        zone = "Asia/Hong_Kong")
-    @Scheduled(cron = "0 4,9,14,19,24,29,34,39,44,49,54,59 10-15 * * MON-FRI",
-       zone = "Asia/Hong_Kong")
+   @Scheduled(fixedRate = 120_000)
+    // @Scheduled(cron = "0 34,39,44,49,54,59 9 * * MON-FRI",
+    //     zone = "Asia/Hong_Kong")
+    // @Scheduled(cron = "0 4,9,14,19,24,29,34,39,44,49,54,59 10-15 * * MON-FRI",
+    //    zone = "Asia/Hong_Kong")
    public void stockQuote() throws JsonProcessingException {
     List<Stock> stocks = this.stockService.findAllWithCache();
     if (stocks == null || stocks.size() == 0)

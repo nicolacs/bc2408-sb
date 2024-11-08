@@ -4,14 +4,23 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
+import java.util.Comparator;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
+import javax.management.RuntimeErrorException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import com.bootcamp.demo.entity.StockEntity;
+import com.bootcamp.demo.entity.StockPriceEntity;
 import com.bootcamp.demo.infra.web.BusinessException;
 import com.bootcamp.demo.infra.web.ErrorCode;
 import com.bootcamp.demo.mapper.StockMapper;
@@ -92,45 +101,106 @@ public class StockServieImpl implements StockService {
 
   @Override
   public APIDTO get5minData(String symbol) {
-    String json = this.redisTemplate.opsForValue().get("5MIN-"+symbol);
+    String redisKey = "5MIN-" + symbol;
+    String json = this.redisTemplate.opsForValue().get(redisKey);
     System.out.println("try get5minData^^ json!!!^^^^^:" + json);
-    if (json == null) {
-      APIDTO result = APIDTO.builder()//
-          .regularMarketTime(LocalDate.now().atStartOfDay(ZoneId.of("Asia/Shanghai")).toInstant().toEpochMilli())//
-          .build();
-      List<APIDTO.Data> data = this.stockPriceRepository.findAll().stream()//
-          .filter(stock -> symbol.equals(stock.getSymbol()))//
-          //.max((t1, t2) -> t1.getMarketDateTime().compareTo(t2.getMarketDateTime()))
-          .map(stockEntity -> this.stockMapper.map(stockEntity))
-          .collect(Collectors.toList());
 
-          result.setData(data);
-      redisTemplate.opsForValue().set("5MIN-"+symbol, result.toString());
-      System.out.println("try get5minData^^^^^^^:" + result);
+
+    if (json == null){
+      APIDTO result = APIDTO.builder()
+      .regularMarketTime(LocalDate.now()
+          .atStartOfDay(ZoneId.of("Asia/Shanghai"))
+          .toInstant()
+          .toEpochMilli())
+          .build();
+
+      Map<LocalDateTime, APIDTO.Data> groupedData = this.stockPriceRepository.findAll().stream()
+          .filter(stock -> symbol.equals(stock.getSymbol()))
+          .collect(Collectors.groupingBy(
+            stock -> roundToNextInterval(stock.getMarketDateTime()),
+            Collectors.collectingAndThen(
+              Collectors.maxBy(Comparator.comparing(StockPriceEntity::getMarketDateTime)), 
+              optionalStock -> optionalStock.map(stock -> {
+                APIDTO.Data data = this.stockMapper.map(stock);
+
+                data.setMarketTime(roundToNextInterval(stock.getMarketDateTime())
+                .format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
+                return data;
+              }) .orElse(null))
+              ));
+      List<APIDTO.Data> data = groupedData.values().stream()
+          .filter(Objects::nonNull)
+         // .sorted(Comparator.comparing(APIDTO.Data::getMarketTime))
+          .collect(Collectors.toList());
+      result.setData(data);
+
+      Set<PricePoint> pricePoint =data.stream()
+          .sorted(Comparator.comparing(APIDTO.Data::getMarketTime))
+          .map(t -> new PricePoint(t.getMarketTime(), t.getRegularMarketPrice()))
+          .collect(Collectors.toCollection(LinkedHashSet::new));
+      System.out.println("toSet~~~~~~~~~~~~~~~~~StockServiceimpl~~:" + pricePoint);
+
+      try{
+          String jsonResult = objectMapper.writeValueAsString(result);
+          redisTemplate.opsForValue().set(redisKey, jsonResult);
+          redisTemplate.expire(redisKey, 12, TimeUnit.HOURS);
+          System.out.println("try get5minData^^^jsonResult^^^^:" + jsonResult);
+      }catch (JsonProcessingException e){
+          throw new RuntimeException("Error serializing stock data", e);
+      }
       return result;
     }
-    try {
+    try{
       return objectMapper.readValue(json, APIDTO.class);
-  } catch (JsonProcessingException e) {
-      throw new RuntimeException("Error parsing stock data", e);
+    } catch (JsonProcessingException e) {
+        throw new RuntimeException("Error parsing stock data", e);
+    }
+
+    
   }
+
+
+  private LocalDateTime roundToNextInterval(LocalDateTime dateTime) {
+    int minutes = dateTime.getMinute();
+    int roundedMinutes = Math.round((minutes / 5)+1 ) * 5;
+    
+    // 處理59分鐘的情況，可能需要進位到下一個小時
+    if (roundedMinutes == 60) {
+        return dateTime.plusHours(1).withMinute(0);
+    }
+    return dateTime
+        .withMinute(roundedMinutes)
+        .withSecond(0)
+        .withNano(0);
   }
 
   public static class PricePoint {
-    private LocalDateTime timestamp;
+    private String timestamp;
     private double closePrice;
 
-    public PricePoint(LocalDateTime timestamp, double closePrice) {
+    public PricePoint(String timestamp, double closePrice) {
       this.timestamp = timestamp;
       this.closePrice = closePrice;
     }
 
-    public LocalDateTime getTimestamp() {
+    public String getTimestamp() {
       return this.timestamp;
+    }
+
+    public void setTimestamp(String timestamp) {
+      this.timestamp = timestamp;
     }
 
     public double getClosePrice() {
       return this.closePrice;
+    }
+
+    @Override
+    public String toString() {
+      return "Transaction[" //
+          + "timestamp=" + this.timestamp //
+          + "closePrice" + this.closePrice //
+          + "]";
     }
 
     @Override
@@ -150,23 +220,25 @@ public class StockServieImpl implements StockService {
   }
 }
 
-// List<String> symbols = stocks.stream() //
-// .map(s -> s.getSymbol()) //
-// .collect(Collectors.toList());
-// // System.out.println("symbols=" + symbols);
-// YahooQuoteDTO quoteDTO = this.yahooFinanceService.getQuote(symbols);
-// quoteDTO.getBody().getResults().forEach(s -> {
-// StockEntity stockEntity = this.stockService.findBySymbol(s.getSymbol());
-// StockPriceEntity stockPriceEntity = this.stockPriceMapper.map(s);
-// stockPriceEntity.setStock(stockEntity);
-// stockPriceEntity.setSymbol(stockEntity.getSymbol());
-// stockPriceEntity.setTranType("5MIN");
-// this.stockPriceRepository.save(stockPriceEntity);
-// System.out.println("stockPriceEntity**********" +stockPriceEntity);
 
-// // Save into Redis
-// String redisKey = stockEntity.getSymbol();
-// LocalDate systemDate = stockPriceEntity.getMarketDateTime().toLocalDate();
-// String formattedDate = systemDate.format(DateTimeFormatter.ISO_LOCAL_DATE);
-// redisTemplate.opsForValue().set(redisKey , formattedDate, 8, TimeUnit.HOURS);
-// });   
+  //   if (json == null) {
+  //     APIDTO result = APIDTO.builder()//
+  //         .regularMarketTime(LocalDate.now().atStartOfDay(ZoneId.of("Asia/Shanghai")).toInstant().toEpochMilli())//
+  //         .build();
+
+  //     List<APIDTO.Data> data = this.stockPriceRepository.findAll().stream()//
+  //         .filter(stock -> symbol.equals(stock.getSymbol()))//
+  //         .map(stockEntity -> this.stockMapper.map(stockEntity))
+  //         .collect(Collectors.toList());
+
+  //         result.setData(data);
+  //     redisTemplate.opsForValue().set("5MIN-"+symbol, result.toString());
+  //     System.out.println("try get5minData^^^^^^^:" + result);
+  //     return result;
+  //   }
+  //   try {
+  //     return objectMapper.readValue(json, APIDTO.class);
+  // } catch (JsonProcessingException e) {
+  //     throw new RuntimeException("Error parsing stock data", e);
+  // }
+  // }
